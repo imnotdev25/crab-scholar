@@ -2,8 +2,8 @@
 
 import json
 
-from research_claw.graph.knowledge_graph import KnowledgeGraph
-from research_claw.graph.builder import build_graph
+from crab_scholar.graph.knowledge_graph import KnowledgeGraph
+from crab_scholar.graph.builder import build_graph
 
 
 class TestKnowledgeGraph:

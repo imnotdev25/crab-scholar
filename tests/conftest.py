@@ -1,8 +1,8 @@
-"""Shared test fixtures for ResearchClaw."""
+"""Shared test fixtures for CrabScholar."""
 
 import pytest
 
-from research_claw.models import (
+from crab_scholar.models import (
     AnalysisDimension,
     ExtractedEntity,
     ExtractedRelation,

@@ -1,6 +1,6 @@
 """Tests for core data models."""
 
-from research_claw.models import (
+from crab_scholar.models import (
     AnalysisDimension,
     DimensionResult,
     ExtractedEntity,

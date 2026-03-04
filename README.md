@@ -1,4 +1,4 @@
-# 🦀 ResearchClaw
+# 🦀 CrabScholar
 
 Research paper analysis pipeline with citation crawling, pluggable LLM prompts, and knowledge graph building.
 
@@ -27,47 +27,47 @@ uv sync
 
 ```bash
 # Initialize project config
-uv run rclaw init
+uv run crab init
 
 # Edit .env with your API key
 nano .env
 
 # Analyze a paper by title
-uv run rclaw analyze "attention is all you need"
+uv run crab analyze "attention is all you need"
 
 # Search by keywords
-uv run rclaw analyze --keywords "LLM evaluation, benchmark contamination"
+uv run crab analyze --keywords "LLM evaluation, benchmark contamination"
 
 # Analyze a local PDF
-uv run rclaw analyze --pdf paper.pdf
+uv run crab analyze --pdf paper.pdf
 
 # Control crawl depth
-uv run rclaw analyze "GPT-4 Technical Report" --depth 5
+uv run crab analyze "GPT-4 Technical Report" --depth 5
 
 # Search without analyzing
-uv run rclaw search "transformer evaluation"
+uv run crab search "transformer evaluation"
 
 # Build knowledge graph from results
-uv run rclaw build
+uv run crab build
 
 # Export graph
-uv run rclaw export json
-uv run rclaw export graphml
-uv run rclaw export csv
+uv run crab export json
+uv run crab export graphml
+uv run crab export csv
 
 # List analysis dimensions
-uv run rclaw dimensions
+uv run crab dimensions
 
 # Show config
-uv run rclaw info
+uv run crab info
 ```
 
 ## Configuration
 
-Settings load from: CLI flags > env vars (`RCLAW_` prefix) > `.env` > `rclaw.yaml` > defaults.
+Settings load from: CLI flags > env vars (`CRAB_` prefix) > `.env` > `crab.yaml` > defaults.
 
 ```yaml
-# rclaw.yaml
+# crab.yaml
 default_model: openai/gpt-4o-mini
 fallback_models:
   - openai/gpt-3.5-turbo
@@ -96,15 +96,15 @@ extraction_prompt: |
   ...
 ```
 
-Then use: `uv run rclaw analyze "paper" --prompts-dir my_prompts/`
+Then use: `uv run crab analyze "paper" --prompts-dir my_prompts/`
 
 ## Python API
 
 ```python
-from research_claw.pipeline import run_pipeline
-from research_claw.config import RClawConfig
+from crab_scholar.pipeline import run_pipeline
+from crab_scholar.config import CrabConfig
 
-config = RClawConfig(
+config = CrabConfig(
     default_model="openai/gpt-4o-mini",
     citation_depth=3,
 )

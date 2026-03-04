@@ -1,7 +1,7 @@
 """Tests for the BFS citation crawler."""
 
-from research_claw.ingest.crawler import crawl
-from research_claw.models import Paper
+from crab_scholar.ingest.crawler import crawl
+from crab_scholar.models import Paper
 
 
 class FakeScholar:

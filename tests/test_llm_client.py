@@ -2,7 +2,7 @@
 
 import json
 
-from research_claw.llm_client import parse_llm_json
+from crab_scholar.llm_client import parse_llm_json
 
 
 class TestParseLLMJson:

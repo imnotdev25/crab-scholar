@@ -4,12 +4,12 @@ from pathlib import Path
 
 import yaml
 
-from research_claw.analyze.dimensions import (
+from crab_scholar.analyze.dimensions import (
     DEFAULT_DIMENSIONS,
     load_dimensions,
     list_available_dimensions,
 )
-from research_claw.models import AnalysisDimension
+from crab_scholar.models import AnalysisDimension
 
 
 class TestLoadDimensions:
