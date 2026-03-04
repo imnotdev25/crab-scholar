@@ -1,0 +1,67 @@
+name: statistical_tests
+display_name: "Statistical Tests"
+description: "Statistical rigor — significance tests, confidence intervals, effect sizes"
+system_message: |
+  You are a statistical methods expert reviewing research papers for statistical rigor
+  in LLM evaluation. Extract all statistical methodology and tests used.
+  Always output valid JSON.
+extraction_prompt: |
+  Analyze the following research paper and extract information about statistical tests and rigor.
+
+  Paper: {title}
+  Authors: {authors}
+
+  TEXT:
+  {paper_text}
+
+  Extract the following and return as JSON:
+  {{
+    "statistical_tests": [
+      {{
+        "name": "test name (e.g., paired t-test, Wilcoxon, bootstrap, McNemar)",
+        "purpose": "what was being tested",
+        "result": "outcome if reported (p-value, significant/not)"
+      }}
+    ],
+    "confidence_intervals": [
+      {{
+        "metric": "metric name",
+        "interval": "reported CI",
+        "confidence_level": "e.g., 95%"
+      }}
+    ],
+    "effect_sizes": [
+      {{
+        "measure": "effect size measure (e.g., Cohen's d, Cramér's V)",
+        "value": "reported value",
+        "interpretation": "small/medium/large if mentioned"
+      }}
+    ],
+    "variance_reporting": "how variance is reported (std dev, standard error, IQR, etc.)",
+    "multiple_comparisons": "correction method if used (Bonferroni, Holm, FDR, etc.)",
+    "sample_sizes": ["sample size information mentioned"],
+    "random_seeds": "whether random seeds are reported",
+    "number_of_runs": "number of independent runs/repetitions if mentioned",
+    "statistical_rigor_assessment": "brief assessment of overall statistical rigor (strong/moderate/weak/absent)",
+    "entities": [
+      {{
+        "name": "entity name",
+        "entity_type": "STATISTICAL_TEST|CONFIDENCE_INTERVAL|EFFECT_SIZE|CORRECTION_METHOD",
+        "confidence": 0.0-1.0,
+        "context": "quote from text"
+      }}
+    ],
+    "relations": [
+      {{
+        "relation_type": "TESTED_WITH|REPORTS_SIGNIFICANCE|CORRECTED_BY|APPLIED_TO|VALIDATES",
+        "source_entity": "entity name",
+        "target_entity": "entity name",
+        "confidence": 0.0-1.0,
+        "evidence": "supporting quote"
+      }}
+    ]
+  }}
+
+  If no statistical tests are mentioned, note that in statistical_rigor_assessment and return empty lists.
+
+  OUTPUT JSON:
