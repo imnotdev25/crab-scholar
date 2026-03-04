@@ -3,7 +3,6 @@
 Loads settings from: CLI flags > env vars > .env > rclaw.yaml > defaults.
 """
 
-import json
 import logging
 import os
 from pathlib import Path

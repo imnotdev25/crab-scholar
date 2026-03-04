@@ -1,12 +1,8 @@
 """Tests for core data models."""
 
 from crab_scholar.models import (
-    AnalysisDimension,
-    DimensionResult,
     ExtractedEntity,
-    ExtractedRelation,
     Paper,
-    PaperAnalysis,
 )
 
 

@@ -12,10 +12,8 @@ Commands:
 """
 
 import logging
-import sys
 from enum import Enum
 from pathlib import Path
-from typing import Optional
 
 import typer
 from rich.console import Console
@@ -62,7 +60,7 @@ def version_callback(value: bool):
 
 @app.callback()
 def main(
-    version: Optional[bool] = typer.Option(
+    version: bool | None = typer.Option(
         None, "--version", "-v", help="Show version", callback=version_callback, is_eager=True,
     ),
 ):
@@ -72,15 +70,15 @@ def main(
 
 @app.command()
 def analyze(
-    query: Optional[str] = typer.Argument(None, help="Paper title, DOI, URL, or keywords"),
-    keywords: Optional[str] = typer.Option(None, "--keywords", "-k", help="Comma-separated keywords for Scholar search"),
-    pdf: Optional[Path] = typer.Option(None, "--pdf", "-p", help="Path to a local PDF file"),
-    text: Optional[str] = typer.Option(None, "--text", "-t", help="Raw text to analyze"),
-    depth: Optional[int] = typer.Option(None, "--depth", "-d", help="Citation crawl depth (default: 3)"),
-    max_papers: Optional[int] = typer.Option(None, "--max-papers", "-m", help="Max papers to crawl"),
-    dimensions: Optional[str] = typer.Option(None, "--dimensions", help="Comma-separated dimension names to use"),
-    model: Optional[str] = typer.Option(None, "--model", help="Override default LLM model"),
-    output: Optional[Path] = typer.Option(None, "--output", "-o", help="Output directory"),
+    query: str | None = typer.Argument(None, help="Paper title, DOI, URL, or keywords"),
+    keywords: str | None = typer.Option(None, "--keywords", "-k", help="Comma-separated keywords for Scholar search"),
+    pdf: Path | None = typer.Option(None, "--pdf", "-p", help="Path to a local PDF file"),
+    text: str | None = typer.Option(None, "--text", "-t", help="Raw text to analyze"),
+    depth: int | None = typer.Option(None, "--depth", "-d", help="Citation crawl depth (default: 3)"),
+    max_papers: int | None = typer.Option(None, "--max-papers", "-m", help="Max papers to crawl"),
+    dimensions: str | None = typer.Option(None, "--dimensions", help="Comma-separated dimension names to use"),
+    model: str | None = typer.Option(None, "--model", help="Override default LLM model"),
+    output: Path | None = typer.Option(None, "--output", "-o", help="Output directory"),
     verbose: bool = typer.Option(False, "--verbose", help="Verbose logging"),
 ):
     """Analyze papers — search, crawl citations, extract insights, build graph.
@@ -146,7 +144,7 @@ def analyze(
             raw_text=raw_text,
             config=config,
         )
-        console.print(f"\n[green]✓[/] Analysis complete!")
+        console.print("\n[green]✓[/] Analysis complete!")
         console.print(f"  Entities: {kg.entity_count}")
         console.print(f"  Relations: {kg.relation_count}")
         console.print(f"  Output: {config.output_dir}")
@@ -159,7 +157,7 @@ def analyze(
 
 @app.command()
 def build(
-    output: Optional[Path] = typer.Option(None, "--output", "-o", help="Output directory"),
+    output: Path | None = typer.Option(None, "--output", "-o", help="Output directory"),
     verbose: bool = typer.Option(False, "--verbose", help="Verbose logging"),
 ):
     """Build knowledge graph from analysis results."""
@@ -181,7 +179,7 @@ def build(
 @app.command()
 def export(
     fmt: ExportFormat = typer.Argument(ExportFormat.json, help="Export format"),
-    output: Optional[Path] = typer.Option(None, "--output", "-o", help="Output directory"),
+    output: Path | None = typer.Option(None, "--output", "-o", help="Output directory"),
     verbose: bool = typer.Option(False, "--verbose", help="Verbose logging"),
 ):
     """Export knowledge graph to JSON, GraphML, GEXF, or CSV."""
@@ -237,7 +235,7 @@ def search(
 
 @app.command()
 def dimensions(
-    prompts_dir: Optional[Path] = typer.Option(None, "--prompts-dir", help="Custom prompts directory"),
+    prompts_dir: Path | None = typer.Option(None, "--prompts-dir", help="Custom prompts directory"),
     verbose: bool = typer.Option(False, "--verbose", help="Verbose logging"),
 ):
     """List available analysis dimensions."""
@@ -266,9 +264,9 @@ def dimensions(
 
 @app.command()
 def view(
-    output: Optional[Path] = typer.Option(None, "--output", "-o", help="Output directory with graph.json"),
-    top_n: Optional[int] = typer.Option(None, "--top", "-n", help="Show only top N nodes by degree"),
-    min_confidence: Optional[float] = typer.Option(None, "--min-confidence", help="Minimum confidence threshold"),
+    output: Path | None = typer.Option(None, "--output", "-o", help="Output directory with graph.json"),
+    top_n: int | None = typer.Option(None, "--top", "-n", help="Show only top N nodes by degree"),
+    min_confidence: float | None = typer.Option(None, "--min-confidence", help="Minimum confidence threshold"),
     no_browser: bool = typer.Option(False, "--no-browser", help="Don't open browser automatically"),
     verbose: bool = typer.Option(False, "--verbose", help="Verbose logging"),
 ):
@@ -324,7 +322,7 @@ def init(
     env_path = Path(".env")
 
     if yaml_path.exists():
-        console.print(f"[yellow]rclaw.yaml already exists, skipping[/]")
+        console.print("[yellow]rclaw.yaml already exists, skipping[/]")
     else:
         yaml_path.write_text(
             "# CrabScholar Configuration\n"
@@ -346,7 +344,7 @@ def init(
         console.print(f"[green]✓[/] Created {yaml_path}")
 
     if env_path.exists():
-        console.print(f"[yellow].env already exists, skipping[/]")
+        console.print("[yellow].env already exists, skipping[/]")
     else:
         env_path.write_text(
             "# CrabScholar API Keys\n"

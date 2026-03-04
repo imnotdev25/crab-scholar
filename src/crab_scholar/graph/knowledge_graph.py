@@ -6,7 +6,7 @@ JSON serialization, and basic graph stats.
 
 import json
 import logging
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from pathlib import Path
 from typing import Any
 
@@ -20,7 +20,7 @@ class KnowledgeGraph:
 
     def __init__(self):
         self.graph = nx.MultiDiGraph()
-        self.created_at = datetime.now(timezone.utc).isoformat()
+        self.created_at = datetime.now(UTC).isoformat()
         self.updated_at = self.created_at
 
     @classmethod
@@ -145,7 +145,7 @@ class KnowledgeGraph:
         return {
             "metadata": {
                 "created_at": self.created_at,
-                "updated_at": datetime.now(timezone.utc).isoformat(),
+                "updated_at": datetime.now(UTC).isoformat(),
                 "entity_count": self.entity_count,
                 "relation_count": self.relation_count,
             },

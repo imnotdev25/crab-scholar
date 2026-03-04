@@ -109,6 +109,7 @@ def _extract_pdf(path: Path) -> str:
     """Extract text from a PDF using Kreuzberg."""
     try:
         import asyncio
+
         from kreuzberg import extract_file
 
         result = asyncio.run(extract_file(path))

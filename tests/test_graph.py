@@ -1,9 +1,8 @@
 """Tests for the knowledge graph module."""
 
-import json
 
-from crab_scholar.graph.knowledge_graph import KnowledgeGraph
 from crab_scholar.graph.builder import build_graph
+from crab_scholar.graph.knowledge_graph import KnowledgeGraph
 
 
 class TestKnowledgeGraph:

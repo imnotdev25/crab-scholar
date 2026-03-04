@@ -8,7 +8,6 @@ collects results into PaperAnalysis objects.
 import asyncio
 import json
 import logging
-from typing import Any
 
 from crab_scholar.llm_client import LLMClient
 from crab_scholar.models import (

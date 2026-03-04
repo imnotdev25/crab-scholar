@@ -1,15 +1,13 @@
 """Tests for the dimension loader."""
 
-from pathlib import Path
 
 import yaml
 
 from crab_scholar.analyze.dimensions import (
     DEFAULT_DIMENSIONS,
-    load_dimensions,
     list_available_dimensions,
+    load_dimensions,
 )
-from crab_scholar.models import AnalysisDimension
 
 
 class TestLoadDimensions:

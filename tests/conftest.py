@@ -4,11 +4,11 @@ import pytest
 
 from crab_scholar.models import (
     AnalysisDimension,
+    DimensionResult,
     ExtractedEntity,
     ExtractedRelation,
     Paper,
     PaperAnalysis,
-    DimensionResult,
 )
 
 

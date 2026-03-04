@@ -6,12 +6,11 @@ Deduplicates entities across papers by normalized name + type.
 """
 
 import logging
-from typing import Any
 
 from unidecode import unidecode
 
 from crab_scholar.graph.knowledge_graph import KnowledgeGraph
-from crab_scholar.models import PaperAnalysis, Paper
+from crab_scholar.models import Paper, PaperAnalysis
 
 logger = logging.getLogger(__name__)
 
