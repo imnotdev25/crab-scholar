@@ -3,6 +3,7 @@
 Commands:
   rclaw analyze    — Analyze papers (by query, keywords, PDF, or text)
   rclaw build      — Build knowledge graph from analysis results
+  rclaw view       — Interactive graph visualization in browser
   rclaw export     — Export graph to JSON/GraphML/GEXF/CSV
   rclaw search     — Search for papers via Semantic Scholar
   rclaw dimensions — List available analysis dimensions
@@ -261,6 +262,55 @@ def dimensions(
         )
 
     console.print(table)
+
+
+@app.command()
+def view(
+    output: Optional[Path] = typer.Option(None, "--output", "-o", help="Output directory with graph.json"),
+    top_n: Optional[int] = typer.Option(None, "--top", "-n", help="Show only top N nodes by degree"),
+    min_confidence: Optional[float] = typer.Option(None, "--min-confidence", help="Minimum confidence threshold"),
+    no_browser: bool = typer.Option(False, "--no-browser", help="Don't open browser automatically"),
+    verbose: bool = typer.Option(False, "--verbose", help="Verbose logging"),
+):
+    """Open interactive knowledge graph viewer in browser.
+
+    Requires a graph.json file (created by `rclaw build` or `rclaw analyze`).
+    """
+    _setup_logging(verbose)
+    from research_claw.config import RClawConfig
+    from research_claw.graph.knowledge_graph import KnowledgeGraph
+    from research_claw.visualize import generate_view
+
+    config = RClawConfig()
+    out = output or config.output_dir
+    graph_path = out / "graph.json"
+
+    if not graph_path.exists():
+        console.print(f"[red]Error:[/] No graph found at {graph_path}")
+        console.print("Run [bold]rclaw analyze[/] or [bold]rclaw build[/] first.")
+        raise typer.Exit(1)
+
+    try:
+        kg = KnowledgeGraph.load(graph_path)
+        console.print(f"Loaded graph: {kg.entity_count} entities, {kg.relation_count} relations")
+
+        html_path = out / "graph.html"
+        generate_view(
+            kg,
+            output_path=html_path,
+            open_browser=not no_browser,
+            top_n=top_n,
+            min_confidence=min_confidence,
+        )
+        console.print(f"[green]✓[/] Viewer generated → {html_path}")
+    except ImportError:
+        console.print("[red]Error:[/] pyvis is required. Install with: [bold]uv add pyvis[/]")
+        raise typer.Exit(1)
+    except Exception as e:
+        console.print(f"[red]Error:[/] {e}")
+        if verbose:
+            console.print_exception()
+        raise typer.Exit(1)
 
 
 @app.command()
