@@ -292,7 +292,7 @@ wheels = [
 ]
 
 [[package]]
-name = "crabscholar"
+name = "crab-scholar"
 version = "0.1.0"
 source = { editable = "." }
 dependencies = [

@@ -1,0 +1,45 @@
+<div id="crab-controls">
+    <div class="rc-header">
+        <div class="rc-title"><span class="rc-logo">🦀</span> CrabScholar</div>
+        <div class="rc-subtitle">Knowledge Graph Explorer</div>
+    </div>
+
+    <div class="rc-section">
+        <div class="search-wrapper">
+            <span class="search-icon">🔍</span>
+            <input id="search-input" type="text" placeholder="Search entities..." oninput="searchEntity(this.value)">
+        </div>
+        <div class="slider-group">
+            <div class="slider-label">
+                <span>Min connections</span>
+                <span class="slider-value" id="deg-val">$default_degree</span>
+            </div>
+            <input id="deg-slider" type="range" min="0" max="20" value="$default_degree"
+                oninput="filterByDegree(this.value)">
+        </div>
+    </div>
+
+    <div class="rc-section">
+        <div class="section-header"><span class="section-icon">◉</span> Entity Types</div>
+        $entity_items
+    </div>
+
+    <div class="rc-section">
+        <div class="section-header"><span class="section-icon">⟶</span> Relation Types</div>
+        $relation_items
+    </div>
+
+    <div class="rc-stats">
+        <div class="rc-stat"><span class="rc-stat-num">$entity_count</span> entities</div>
+        <div class="rc-stat"><span class="rc-stat-num">$relation_count</span> relations</div>
+    </div>
+</div>
+
+<div id="detail-panel">
+    <div id="detail-header">
+        <h3 id="detail-title">Detail</h3>
+        <button id="detail-close" onclick="closeDetail()">&times;</button>
+    </div>
+    <div id="detail-body"></div>
+</div>
+<div id="edge-tooltip"></div>
